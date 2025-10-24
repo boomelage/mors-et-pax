@@ -103,6 +103,14 @@
       <span style="font-size: 0.6em;">of</span> <br>
       Mors et Pax
     </h1>
+
+    <div class="ticker"><marquee scrollamount="5">
+
+      *** lambda radio is under constuction, yell into the void if you wish to help out ***
+
+    </marquee></div>
+    <br>
+
     <div class="container">
       <p class="typewriter">welcome</p>
       <div id="mainPlayer"></div>
@@ -153,6 +161,7 @@
 
         const progressContainer = document.createElement('div');
         progressContainer.className = 'progress-container';
+        progressContainer.addEventListener('click', (e) => seek(e, track.id));
 
         const progressBar = document.createElement('div');
         progressBar.className = 'progress-bar';
@@ -190,6 +199,14 @@
         }
       }
 
+      function seek(event, audioId) {
+        const audio = document.getElementById(audioId);
+        const progressContainer = event.currentTarget;
+        const clickX = event.clientX - progressContainer.getBoundingClientRect().left;
+        const percentage = (clickX / progressContainer.offsetWidth) * 100;
+        audio.currentTime = (percentage / 100) * audio.duration;
+      }
+
       const mainContainer = document.getElementById('mainPlayer');
       tracks.forEach((track, index) => {
         mainContainer.appendChild(createPlayer(track, index));
@@ -206,5 +223,9 @@
       });
 
     </script>
+    <br> <br>
+    <footer>
+      &copy; <span id="yr"></span> Cult of the Deceased | Hidden Node <a href="../files/manuscript/manuscript.pdf" style="text-decoration: none; color: inherit;">Lambda</a>
+    </footer>
   </body>
 </html>
