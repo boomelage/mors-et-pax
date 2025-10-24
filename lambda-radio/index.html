@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <body oncontextmenu="return false;">
+    <title>Lambda Radio</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" href="style/logo.png">
-    <link rel="apple-touch-icon" href="style/logo.png" />
+    <link rel="icon" type="image/png" href="style/icon.png">
+    <link rel="apple-touch-icon" href="style/icon.png" />
     <meta name="title" content="Lambda Radio" />
     <meta name="description" content="Ominous Sounds." />
     <meta property="og:title" content="Lambda Radio" />
@@ -101,7 +101,7 @@
       <span style="font-size: 0.6em;">The</span> <br>
       Ominous Sounds <br>
       <span style="font-size: 0.6em;">of</span> <br>
-      Lambda Radio
+      Mors et Pax
     </h1>
     <div class="container">
       <p class="typewriter">welcome</p>
@@ -127,6 +127,14 @@
       ];
 
       function createPlayer(track, index) {
+        const playerContainer = document.createElement('div');
+
+        const pathParagraph = document.createElement('p');
+        pathParagraph.textContent = track.file;
+        pathParagraph.style.fontStyle = 'italic';
+        pathParagraph.style.fontSize = '0.8em';
+        playerContainer.appendChild(pathParagraph);
+
         const playerDiv = document.createElement('div');
         playerDiv.className = 'retro-player';
 
@@ -157,7 +165,8 @@
           document.getElementById(button.id).textContent = 'Play';
         });
 
-        return playerDiv;
+        playerContainer.appendChild(playerDiv);
+        return playerContainer;
       }
 
       function togglePlay(audioId, btnId) {
