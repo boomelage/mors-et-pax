@@ -1,0 +1,76 @@
+\documentclass[openany]{book}
+
+% Page geometry
+\usepackage[a6paper,margin=0.67in]{geometry} 
+
+% Font packages
+\usepackage[T1]{fontenc}
+\usepackage{inconsolata} % Monospaced / typewriter font
+\usepackage{microtype}
+
+% Colors
+\usepackage{xcolor}
+\pagecolor{black} % background
+\color[HTML]{32CD32} % neon green text
+
+% Hyperlinks
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=[HTML]{32CD32},
+	citecolor=[HTML]{32CD32},
+	urlcolor=[HTML]{32CD32}
+}
+
+% Titles
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+{\normalfont\bfseries\ttfamily\fontsize{12}{14}\selectfont} % typewriter + bold
+{}
+{0pt}
+{\begin{center}\Huge}[\end{center}] % wrap chapter title in center
+
+\titleformat{\section}{\ttfamily\bfseries\fontsize{8}{10}\selectfont}{\thesection}{1em}{}
+\titleformat{\subsection}{\ttfamily\bfseries\fontsize{7}{9}\selectfont}{\thesubsection}{1em}{}
+
+% Paragraph formatting
+\setlength{\parindent}{1em} 
+\setlength{\parskip}{0pt}  
+
+% Reduce global font size
+\renewcommand\normalsize{\fontsize{6}{6}\selectfont}
+
+% For ASCII art in chapters
+\usepackage{verbatim}
+
+% Document info
+\title{\Huge MORS ET PAX}
+\author{\emph{Cult of the Deceased}}
+\date{\today}
+
+\begin{document}
+	
+	\frontmatter
+	
+	\begin{titlepage}
+		\begin{center}
+			\vfill
+			{\Huge \textbf{MORS ET PAX}}
+			\vfill
+			{\large \emph{Cult of the Deceased}}\\
+			\vfill
+		\end{center}
+	\end{titlepage}
+	
+%	\tableofcontents
+	\newpage
+	
+	These pages shall one day be populated with the intentions and purpose of \emph{Mors et Pax}.
+	
+	
+	\mainmatter
+	
+	\backmatter
+	
+	
+\end{document}

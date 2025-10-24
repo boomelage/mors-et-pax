@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <body oncontextmenu="return false;">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="style/logo.png">
+    <link rel="apple-touch-icon" href="style/logo.png" />
+    <meta name="title" content="Lambda Radio" />
+    <meta name="description" content="Ominous Sounds." />
+    <meta property="og:title" content="Lambda Radio" />
+    <meta property="og:description" content="Ominous Sounds." />
+    <meta property="og:url" content="https://lambda-radio.com" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Lambda Radio" />
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+
+      body {
+        background-color: black;
+        color: #32cd32;
+        font-family: 'Special Elite', Courier, monospace;
+        text-align: center;
+        padding: 20px;
+        cursor: url('https://cur.cursors-4u.net/others/oth-5/oth461.cur'), auto;
+      }
+      *,
+      *::before,
+      *::after {
+        cursor: url('https://cur.cursors-4u.net/others/oth-5/oth461.cur'), auto !important;
+      }
+
+      h1 {
+        text-shadow: 2px 2px 5px purple;
+      }
+
+      .container {
+        max-width: 600px;
+        margin: auto;
+        padding: 20px;
+        background: rgba(0, 0, 0, 0.8);
+        border: 2px solid #32cd32;
+        box-shadow: 0px 0px 15px purple;
+        border-radius: 10px;
+      }
+
+      .typewriter {
+        overflow: hidden;
+        white-space: nowrap;
+        animation: typing 4s steps(40, end) infinite alternate;
+        margin-bottom: 20px;
+      }
+
+      @keyframes typing {
+        from {
+          width: 0;
+        }
+        to {
+          width: 100%;
+        }
+      }
+
+      .retro-player {
+        background: #222;
+        border: 2px solid #32cd32;
+        border-radius: 5px;
+        padding: 10px;
+        margin: 20px 0;
+      }
+
+      .play-btn {
+        background: #000;
+        color: #32cd32;
+        border: 2px solid #32cd32;
+        border-radius: 3px;
+        padding: 5px 10px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+
+      .progress-container {
+        background: #555;
+        border: 1px solid #32cd32;
+        height: 10px;
+        width: 100%;
+        margin-top: 10px;
+        position: relative;
+      }
+
+      .progress-bar {
+        background: #32cd32;
+        height: 100%;
+        width: 0%;
+        transition: width 0.1s linear;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>
+      <span style="font-size: 0.6em;">The</span> <br>
+      Ominous Sounds <br>
+      <span style="font-size: 0.6em;">of</span> <br>
+      Lambda Radio
+    </h1>
+    <div class="container">
+      <p class="typewriter">welcome</p>
+      <div id="mainPlayer"></div>
+      <p class="typewriter">pure instrumentals</p>
+      <div id="instrumentalsPlayer"></div>
+      <!-- <p class="typewriter">dance beats</p>
+      <div id="miniPlayer"></div> -->
+    </div>
+
+    <script>
+      const tracks = [
+        { id: 'audio1', file: 'tracks/main/eerie.m4a' },
+        { id: 'audio2', file: 'tracks/main/godhelpufr.m4a' }
+      ];
+
+      const instrumentalTracks = [
+        { id: 'instr1', file: 'tracks/instrumental/redd.m4a' }
+      ];
+
+      const miniTracks = [
+        /*{ id: 'mini1', file: 'tracks/mini/mini.m4a' }*/
+      ];
+
+      function createPlayer(track, index) {
+        const playerDiv = document.createElement('div');
+        playerDiv.className = 'retro-player';
+
+        const audio = document.createElement('audio');
+        audio.id = track.id;
+        audio.src = track.file;
+        audio.type = 'audio/mp4';
+        playerDiv.appendChild(audio);
+
+        const button = document.createElement('button');
+        button.className = 'play-btn';
+        button.id = 'btn' + index;
+        button.textContent = 'Play';
+        button.onclick = () => togglePlay(track.id, button.id);
+        playerDiv.appendChild(button);
+
+        const progressContainer = document.createElement('div');
+        progressContainer.className = 'progress-container';
+
+        const progressBar = document.createElement('div');
+        progressBar.className = 'progress-bar';
+        progressBar.id = 'progress' + index;
+        progressContainer.appendChild(progressBar);
+        playerDiv.appendChild(progressContainer);
+
+        audio.addEventListener('timeupdate', () => updateProgress(track.id, progressBar.id));
+        audio.addEventListener('ended', () => {
+          document.getElementById(button.id).textContent = 'Play';
+        });
+
+        return playerDiv;
+      }
+
+      function togglePlay(audioId, btnId) {
+        const audio = document.getElementById(audioId);
+        const btn = document.getElementById(btnId);
+        if (audio.paused) {
+          audio.play();
+          btn.textContent = 'Pause';
+        } else {
+          audio.pause();
+          btn.textContent = 'Play';
+        }
+      }
+
+      function updateProgress(audioId, progressId) {
+        const audio = document.getElementById(audioId);
+        const progress = document.getElementById(progressId);
+        if (audio.duration) {
+          const percentage = (audio.currentTime / audio.duration) * 100;
+          progress.style.width = percentage + '%';
+        }
+      }
+
+      const mainContainer = document.getElementById('mainPlayer');
+      tracks.forEach((track, index) => {
+        mainContainer.appendChild(createPlayer(track, index));
+      });
+
+      const instrumentalsContainer = document.getElementById('instrumentalsPlayer');
+      instrumentalTracks.forEach((track, index) => {
+        instrumentalsContainer.appendChild(createPlayer(track, index + tracks.length));
+      });
+
+      const miniContainer = document.getElementById('miniPlayer');
+      miniTracks.forEach((track, index) => {
+        miniContainer.appendChild(createPlayer(track, index + tracks.length + instrumentalTracks.length));
+      });
+
+    </script>
+  </body>
+</html>
